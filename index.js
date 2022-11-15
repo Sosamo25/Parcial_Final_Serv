@@ -2,10 +2,10 @@ const mysql = require('mysql');
 const express = require('express');
 const bodyparser = require('body-parser');
 var app = express();
-//Configuring express server
+//Configuracion express 
 app.use(bodyparser.json());
 
-//MySQL details
+//MySQL configuración
 var mysqlConnection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -21,13 +21,13 @@ var mysqlConnection = mysql.createConnection({
     console.log('Connection Failed!'+ JSON.stringify(err,undefined,2));
     });
 
-    //Establish the server connection
-//PORT ENVIRONMENT VARIABLE
+    //Establecer conexion
+//PUERTO
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}..`));
 
 
-//Creating GET Router to fetch all the learner details from the MySQL Database
+//Crear GET
 app.get('/libros' , (req, res) => {
   mysqlConnection.query('SELECT * FROM books', (err, rows, fields) => {
   if (!err)
@@ -37,7 +37,7 @@ app.get('/libros' , (req, res) => {
   })
   } );
 
-  //Router to GET specific learner detail from the MySQL database
+  //Crear Get por id
 app.get('/libros/:id' , (req, res) => {
   mysqlConnection.query('SELECT * FROM books WHERE id = ?',[req.params.id], (err, rows, fields) => {
   if (!err)
@@ -47,7 +47,7 @@ app.get('/libros/:id' , (req, res) => {
   })
   } );
 
-  //Router to DELETE a learner's detail
+  //Crear Delete
 app.delete('/libros/:id', (req, res) => {
   mysqlConnection.query('DELETE FROM books WHERE id = ?', [req.params.id], (err, rows, fields) => {
   if (!err)
